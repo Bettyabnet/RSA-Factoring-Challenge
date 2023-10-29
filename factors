@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+
+import sys
+import time
+
+def factorize_number(number):
+    factors = []
+    factor = 2
+    while factor * factor <= number:
+        if number % factor == 0:
+            factors.append(factor)
+            number //= factor
+        else:
+            factor += 1
+    if number > 1:
+        factors.append(number)
+    return factors
+
+def factorize_file(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            number = int(line.strip())
+            factors = factorize_number(number)
+            factorization = '{}={}*{}'.format(number, '*'.join(map(str, factors)))
+            print(factorization)
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Usage: factors <file>')
+        sys.exit(1)
+    file_path = sys.argv[1]
+    factorize_file(file_path)

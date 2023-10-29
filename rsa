@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+
+import sys
+import random
+import time
+
+def factorize_number(n):
+    factors = []
+    divisor = 2
+    while divisor * divisor <= n:
+        if n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        else:
+            divisor += 1
+    if n > 1:
+        factors.append(n)
+    return factors
+
+
+def rsa_factorize(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            n = int(line.strip())
+            factors = factorize_number(n)
+            factorization = '{}={}*{}'.format(n, factors[0], factors[1])
+            print(factorization)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Usage: rsa <file>')
+        sys.exit(1)
+    file_path = sys.argv[1]
+    rsa_factorize(file_path)
